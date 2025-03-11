@@ -1,0 +1,15 @@
+[project]
+name = "rpl_sdl"
+version = "0.1.0"
+description = "Code and config the the Rapid Prototyping Lab's in-house Self Driving Lab"
+authors = [
+    {name = "Ryan D. Lewis", email = "ryan.lewis@anl.gov"},
+]
+dependencies = ["madsci-common>=0.0.4", "madsci-client>=0.0.4", "pre-commit>=4.1.0"]
+requires-python = ">=3.9.1"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
