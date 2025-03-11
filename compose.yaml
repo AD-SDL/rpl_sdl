@@ -3,7 +3,7 @@ services:
   # * Databases and infra
   rpl_mongodb:
     container_name: rpl_mongodb
-    image: mongodb/mongodb:8.0
+    image: mongo:8.0
     ports:
       - 27017:27017
   rpl_redis:
@@ -23,7 +23,7 @@ services:
   # * MADSci Managers
   rpl_event_manager:
     container_name: rpl_event_manager
-    image: madsci:0.1.0
+    image: ${MADSCI_IMAGE}
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -31,12 +31,12 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.event_manager.event_server --definition /home/madsci/rpl/managers/rpl_sdl_event_manager.manager.yaml
+    command: python -m madsci.event_manager.event_server #--definition /home/madsci/rpl/managers/rpl_sdl_event_manager.manager.yaml
     depends_on:
       - rpl_mongodb
   autobots_wc_manager:
     container_name: autobots_wc_manager
-    image: madsci:0.1.0
+    image: ${MADSCI_IMAGE}
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -49,7 +49,7 @@ services:
       - rpl_redis
   rpl_resource_manager:
     container_name: rpl_resource_manager
-    image: madsci:0.1.0
+    image: ${MADSCI_IMAGE}
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -62,7 +62,7 @@ services:
       - rpl_postgres
   rpl_experiment_manager:
     container_name: rpl_experiment_manager
-    image: madsci:0.1.0
+    image: ${MADSCI_IMAGE}
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
