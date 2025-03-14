@@ -11,4 +11,4 @@ event_client_config:
   event_server_url: http://stark.cels.anl.gov:8001
   log_level: 20
   source: null
-  log_dir: /home/luckierdodge/.madsci/logs
+  log_dir: ~/.madsci/logs

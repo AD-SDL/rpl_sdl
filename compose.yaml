@@ -47,6 +47,8 @@ services:
     command: python -m madsci.workcell_manager.workcell_server --definition /home/madsci/rpl/workcells/autobots_wc.workcell.yaml
     depends_on:
       - rpl_redis
+      - rpl_event_manager
+      - rpl_data_manager
   rpl_resource_manager:
     container_name: rpl_resource_manager
     image: ${MADSCI_IMAGE}
@@ -60,6 +62,7 @@ services:
     command: python -m madsci.resource_manager.resource_server --definition /home/madsci/rpl/managers/rpl_sdl_resource_manager.manager.yaml
     depends_on:
       - rpl_postgres
+      - rpl_event_manager
   rpl_experiment_manager:
     container_name: rpl_experiment_manager
     image: ${MADSCI_IMAGE}
@@ -73,3 +76,18 @@ services:
     command: python -m madsci.experiment_manager.experiment_server --definition /home/madsci/rpl/managers/rpl_sdl_experiment_manager.manager.yaml
     depends_on:
       - rpl_mongodb
+      - rpl_event_manager
+  rpl_data_manager:
+    container_name: rpl_data_manager
+    image: ${MADSCI_IMAGE}
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    network_mode: host
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+    command: python -m madsci.data_manager.data_server --definition /home/madsci/rpl/managers/rpl_data_manager.manager.yaml
+    depends_on:
+      - rpl_mongodb
+      - rpl_event_manager

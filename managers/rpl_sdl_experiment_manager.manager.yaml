@@ -8,7 +8,6 @@ port: 8002
 db_url: mongodb://localhost:27017
 event_client_config:
   name: null
-  event_server_url: http://stark.cels.anl.gov:8001
+  event_server_url: http://localhost:8001
   log_level: 20
   source: null
-  log_dir: /home/luckierdodge/.madsci/logs
