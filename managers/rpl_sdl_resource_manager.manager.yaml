@@ -2,13 +2,12 @@ name: RPL_SDL_Resource_Manager
 manager_id: 01JP3DE16DNQGGKQV6RM2JJQTN
 description: The primary resource manager for the RPL SDL
 manager_type: resource_manager
-url: http://stark.cels.anl.gov:8003
+url: http://parker.cels.anl.gov:8003
 host: 0.0.0.0
 port: 8003
 db_url: postgresql://rpl:rpl@localhost:5432/resources
 event_client_config:
   name: null
-  event_server_url: http://stark.cels.anl.gov:8001
+  event_server_url: http://parker.cels.anl.gov:8001
   log_level: 20
-  source: null
   log_dir: ~/.madsci/logs

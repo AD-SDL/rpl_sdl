@@ -1,0 +1,46 @@
+node_name: sciclops
+node_id: 01JPX42MEE9432QR0QFRSEP70Z
+node_url: null
+node_description: The RPL sciclops node
+node_type: device
+module_name: sciclops_module
+module_version: 0.0.1
+capabilities:
+  get_info: true
+  get_state: true
+  get_status: true
+  send_action: true
+  get_action_result: true
+  get_action_history: true
+  action_files: true
+  send_admin_commands: true
+  set_config: true
+  get_resources: false
+  get_log: true
+  admin_commands:
+  - lock
+  - unlock
+  - reset
+  - shutdown
+commands: {}
+is_template: false
+config_defaults:
+  host: 0.0.0.0
+  port: 2001
+  vendor_id: 29971
+  product_id: 2
+  plate_info:
+    96_well:
+      height: 16.2562
+      grab_exchange: -30
+      grab_tower: -18
+    pcr_plate:
+      height: 15.2762
+      grab_exchange: -28
+      grab_tower: -17
+  resource_manager_url: http://parker.cels.anl.gov:8003
+  exchange_location:
+    Z: 23.5188
+    R: 109.2741
+    Y: 32.7484
+    P: 100.8955

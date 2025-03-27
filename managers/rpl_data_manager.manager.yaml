@@ -2,8 +2,8 @@ name: RPL Data Manager
 manager_id: 01JP8D3YXW3SKPM1YDDGAQCNVE
 description: A data manager for the RPL SDL
 manager_type: data_manager
-url: http://stark.cels.anl.gov:8004
-host: 127.0.0.1
+url: http://parker.cels.anl.gov:8004
+host: 0.0.0.0
 port: 8004
 db_url: mongodb://localhost:27017
 file_storage_path: ~/.madsci/datapoints

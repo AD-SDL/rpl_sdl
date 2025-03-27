@@ -1,0 +1,34 @@
+node_name: pf400
+node_id: 01JQ9WC5N1CE6EVBNAJBE0WW1K
+node_url: null
+node_description: MADSci node for controlling PF400, plate handler robot
+node_type: device
+module_name: pf400
+module_version: 0.0.1
+capabilities:
+  get_info: true
+  get_state: true
+  get_status: true
+  send_action: true
+  get_action_result: true
+  get_action_history: true
+  action_files: true
+  send_admin_commands: true
+  set_config: true
+  get_resources: false
+  get_log: true
+  admin_commands:
+  - unlock
+  - resume
+  - reset
+  - shutdown
+  - lock
+  - cancel
+  - pause
+  - safety_stop
+commands: {}
+is_template: false
+config_defaults:
+  host: 0.0.0.0
+  port: 2002
+  pf400_ip: 146.137.240.35

@@ -3,7 +3,7 @@ manager_type: workcell_manager
 workcell_id: 01JP3B5TE2FRNADGSJEVWMKQ56
 description: The main modular workcell in the RPL
 config:
-  host: 127.0.0.1
+  host: 0.0.0.0
   port: 8013
   workcells_directory: ~/.madsci/workcells
   redis_host: localhost
@@ -12,12 +12,134 @@ config:
   event_client_config: null
   scheduler_update_interval: 2.0
   node_update_interval: 1.0
-  heartbeat_interval: 5.0
   auto_start: true
   clear_workflows: false
   cold_start_delay: 0
   scheduler: madsci.workcell_manager.schedulers.default_scheduler
-  data_client_url: http://localhost:8004
-nodes: []
-locations: []
+  data_server_url: http://parker.cels.anl.gov:8004/
+  resource_server_url: http://parker.cels.anl.gov:8003/
+  static_files_path: /home/madsci/ui/dist
+  get_action_result_retries: 3
+nodes:
+  camera_1: http://0.0.0.0:2000
+  pf400: http://0.0.0.0:2002
+  sciclops: http://0.0.0.0:2001
+locations:
+- location_name: tower1
+  location_id: 01JQ4SKEXHJ7KEAQCSAW4RR767
+  description: Sciclops tower 1
+  lookup:
+    sciclops:
+      P: 8.6648
+      R: 133.5
+      Y: 171.9895
+      Z: 23.5188
+  resource_definition:
+    resource_name: tower1
+    resource_type: ''
+    base_type: stack
+    resource_description: null
+    owner:
+      auth_id: 01JQC3G2A2V6Z5PH9GGD98VY4P
+    capacity: 20
+    default_children: null
+    default_child_template: null
+    default_child_quantity: null
+  resource_id: 01JQCC6AZRJFBZKVMR5SXWFXTY
+- location_name: tower2
+  location_id: 01JQ4SKEXHZKKM8FCDWCTVT9Q5
+  description: Sciclops tower 2
+  lookup:
+    sciclops:
+      P: 8.4943
+      R: 151.3
+      Y: 171.4872
+      Z: 23.5188
+  resource_definition: null
+  resource_id: null
+- location_name: tower3
+  location_id: 01JQ4SKEXH42CBRS7Q5WEM34N3
+  description: Sciclops tower 3
+  lookup:
+    sciclops:
+      P: 12.4716
+      R: 169.5
+      Y: 171.481
+      Z: 23.5188
+  resource_definition: null
+  resource_id: null
+- location_name: tower4
+  location_id: 01JQ4SKEXHS4XBDBBY5BWGC6B1
+  description: Sciclops tower 4
+  lookup:
+    sciclops:
+      P: 5.9091
+      R: 187.5
+      Y: 169.447
+      Z: 23.5188
+  resource_definition: null
+  resource_id: null
+- location_name: tower5
+  location_id: 01JQ4SKEXHQV4TJK7YHTHXY98J
+  description: Sciclops tower 5
+  lookup:
+    sciclops:
+      P: 10.8807
+      R: 205.4
+      Y: 171.2082
+      Z: 23.5188
+  resource_definition: null
+  resource_id: null
+- location_name: exchange
+  location_id: 01JQ4SKEXH8B0RYBANYCWQ9Q2W
+  description: Sciclops to PF400 exchange location
+  lookup:
+    pf400:
+    - 223.0
+    - -38.068
+    - 335.876
+    - 325.434
+    - 79.923
+    - 995.062
+    sciclops:
+      P: 100.8955
+      R: 109.2741
+      Y: 32.7484
+      Z: 23.5188
+  resource_definition:
+    resource_name: exchange
+    resource_type: ''
+    base_type: slot
+    resource_description: null
+    owner:
+      auth_id: 01JQCE96VH5A5BJV2DFXS6STDD
+    capacity: 1
+    default_children: null
+    default_child_template: null
+    default_child_quantity: null
+  resource_id: 01JQCE971EKJWR22K5ZYZQ11QT
+- location_name: neutral
+  location_id: 01JQ4SKEXHDN9T09HDYTWMVBBJ
+  description: Neutral joints for the sciclops
+  lookup:
+    sciclops:
+      P: 98.2955
+      R: 109.2741
+      Y: 32.7484
+      Z: 23.5188
+  resource_definition: null
+  resource_id: null
+- location_name: trash
+  location_id: 01JQ9XAW9GF4RB1HWQXD7T674Q
+  description: Trash position for the pf400
+  lookup:
+    pf400:
+    - 259.847
+    - -36.81
+    - 69.09
+    - 687.466
+    - 81.002
+    - 995.035
+  resource_definition: null
+  resource_id: null
 workcell_directory: ~/.madsci/workcells/autobots_wc

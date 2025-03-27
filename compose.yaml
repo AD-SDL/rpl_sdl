@@ -23,7 +23,7 @@ services:
   # * MADSci Managers
   rpl_event_manager:
     container_name: rpl_event_manager
-    image: ${MADSCI_IMAGE}
+    image: madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -31,12 +31,12 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.event_manager.event_server #--definition /home/madsci/rpl/managers/rpl_sdl_event_manager.manager.yaml
+    command: python -m madsci.event_manager.event_server --definition /home/madsci/rpl/managers/rpl_sdl_event_manager.manager.yaml
     depends_on:
       - rpl_mongodb
   autobots_wc_manager:
     container_name: autobots_wc_manager
-    image: ${MADSCI_IMAGE}
+    image: madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -44,14 +44,33 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}../MADSci/src/madsci_workcell_manager/ui:/home/madsci/ui
     command: python -m madsci.workcell_manager.workcell_server --definition /home/madsci/rpl/workcells/autobots_wc.workcell.yaml
+    restart: on-failure
+    depends_on:
+      - rpl_redis
+      - rpl_event_manager
+      - rpl_data_manager
+  lab_manager:
+    container_name: lab_manager
+    image: madsci:latest
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    network_mode: host
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}../MADSci/src/madsci_squid/ui:/home/madsci/ui
+    command: python -m madsci.squid.lab_server --definition /home/madsci/rpl/managers/rpl_sdl_lab_manager.manager.yaml
+    restart: on-failure
     depends_on:
       - rpl_redis
       - rpl_event_manager
       - rpl_data_manager
   rpl_resource_manager:
     container_name: rpl_resource_manager
-    image: ${MADSCI_IMAGE}
+    image: madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -65,11 +84,12 @@ services:
       - rpl_event_manager
   rpl_experiment_manager:
     container_name: rpl_experiment_manager
-    image: ${MADSCI_IMAGE}
+    image: madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
+    restart: on-failure
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
@@ -79,7 +99,7 @@ services:
       - rpl_event_manager
   rpl_data_manager:
     container_name: rpl_data_manager
-    image: ${MADSCI_IMAGE}
+    image: madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -91,3 +111,45 @@ services:
     depends_on:
       - rpl_mongodb
       - rpl_event_manager
+  #Nodes:
+  camera_1:
+    container_name: camera1
+    image: camera_module:latest
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    network_mode: host
+    devices:
+      - /dev/video0:/dev/video0
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+    command: python -m camera_rest_node --definition /home/madsci/rpl/nodes/camera_1.node.yaml
+  sciclops_node:
+    image: sciclops:latest
+    container_name: sciclops_node
+    environment:
+      - USER_ID=0
+      - GROUP_ID=0
+    ports:
+      - 2001:2001
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+    command: python -m sciclops_rest_node --definition /home/madsci/rpl/nodes/sciclops.node.yaml
+    privileged: true
+    restart: unless-stopped
+  pf400_node:
+    image: pf400:latest
+    container_name: pf400_node
+    environment:
+      - USER_ID=0
+      - GROUP_ID=0
+    ports:
+      - 2002:2002
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+    command: python -m pf400_rest_node --definition /home/madsci/rpl/nodes/pf400.node.yaml
+    privileged: true
+    restart: unless-stopped
