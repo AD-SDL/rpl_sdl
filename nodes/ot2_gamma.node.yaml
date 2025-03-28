@@ -1,9 +1,9 @@
-node_name: pf400
-node_id: 01JQ9WC5N1CE6EVBNAJBE0WW1K
+node_name: ot2_gamma
+node_id: 01JQF8FYR6N7FXT2QC2EJWQX94
 node_url: null
-node_description: MADSci node for controlling PF400, plate handler robot
+node_description: Node for the OT2 Beta in the RPL Workcell
 node_type: device
-module_name: pf400
+module_name: ot2_module
 module_version: 0.0.1
 capabilities:
   get_info: true
@@ -18,17 +18,17 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
+  - shutdown
+  - pause
+  - unlock
   - lock
   - resume
-  - unlock
   - cancel
-  - pause
-  - safety_stop
-  - shutdown
   - reset
+  - safety_stop
 commands: {}
 is_template: false
 config_defaults:
-  host: 0.0.0.0
-  port: 2002
-  pf400_ip: 146.137.240.35
+  host: parker.cels.anl.gov
+  port: 2003
+  ot2_ip: 146.137.240.102

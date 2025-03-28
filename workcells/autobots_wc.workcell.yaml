@@ -22,6 +22,7 @@ config:
   get_action_result_retries: 3
 nodes:
   camera_1: http://0.0.0.0:2000
+  ot2_gamma: http://parker.cels.anl.gov:2003
   pf400: http://0.0.0.0:2002
   sciclops: http://0.0.0.0:2001
 locations:
@@ -140,6 +141,62 @@ locations:
     - 687.466
     - 81.002
     - 995.035
-  resource_definition: null
-  resource_id: null
+  resource_definition:
+    resource_name: trash
+    resource_type: ''
+    base_type: stack
+    resource_description: null
+    owner:
+      auth_id: 01JQF53YK93TACRVTQ1WJG18XM
+    capacity: null
+    default_children: null
+    default_child_template: null
+    default_child_quantity: null
+  resource_id: 01JQF53ZRQHZ38NRRKEYWNXJWJ
+- location_name: camera_station
+  location_id: 01JQF4V58DPD3XHVEBRSDDNH2H
+  description: Camera Station
+  lookup:
+    pf400:
+    - 90.597
+    - 26.416
+    - 66.422
+    - 714.811
+    - 81.916
+    - 995.074
+  resource_definition:
+    resource_name: camera_station
+    resource_type: ''
+    base_type: slot
+    resource_description: null
+    owner:
+      auth_id: 01JQF53YK9C2RAQE5NNCV9CR7A
+    capacity: 1
+    default_children: null
+    default_child_template: null
+    default_child_quantity: null
+  resource_id: 01JQF53ZV562M0XAZXJMQ7F3NP
+- location_name: ot2_gamma_deck_2
+  location_id: 01JQF4V58D93AK35CPC6T8HHWA
+  description: Deck 2 on OT2 gamma
+  lookup:
+    pf400:
+    - 156
+    - 66.112
+    - 83.9
+    - 656.404
+    - 119.405
+    - -946.818
+  resource_definition:
+    resource_name: ot2_gamma_deck2
+    resource_type: ''
+    base_type: slot
+    resource_description: null
+    owner:
+      auth_id: 01JQF53YK940V3V3TVYXQX4VCP
+    capacity: 1
+    default_children: null
+    default_child_template: null
+    default_child_quantity: null
+  resource_id: 01JQF53ZVVNFAP75GHA18CTYYJ
 workcell_directory: ~/.madsci/workcells/autobots_wc
