@@ -21,6 +21,7 @@ config:
   static_files_path: /home/madsci/ui/dist
   get_action_result_retries: 3
 nodes:
+  barty: http://kirby.cels.anl.gov:8000
   camera_1: http://0.0.0.0:2000
   ot2_gamma: http://parker.cels.anl.gov:2003
   pf400: http://0.0.0.0:2002
@@ -37,16 +38,17 @@ locations:
       Z: 23.5188
   resource_definition:
     resource_name: tower1
+    resource_name_prefix: null
     resource_type: ''
     base_type: stack
     resource_description: null
-    owner:
-      auth_id: 01JQC3G2A2V6Z5PH9GGD98VY4P
+    owner: {}
+    custom_attributes: null
     capacity: 20
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JQCC6AZRJFBZKVMR5SXWFXTY
+  resource_id: 01JR8KQQMP8MRKY5C8JJ0Y07F0
 - location_name: tower2
   location_id: 01JQ4SKEXHZKKM8FCDWCTVT9Q5
   description: Sciclops tower 2
@@ -109,16 +111,17 @@ locations:
       Z: 23.5188
   resource_definition:
     resource_name: exchange
+    resource_name_prefix: null
     resource_type: ''
     base_type: slot
     resource_description: null
-    owner:
-      auth_id: 01JQCE96VH5A5BJV2DFXS6STDD
+    owner: {}
+    custom_attributes: null
     capacity: 1
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JQCE971EKJWR22K5ZYZQ11QT
+  resource_id: 01JR8KQQQ2SV225A915DXA5A7F
 - location_name: neutral
   location_id: 01JQ4SKEXHDN9T09HDYTWMVBBJ
   description: Neutral joints for the sciclops
@@ -143,16 +146,17 @@ locations:
     - 995.035
   resource_definition:
     resource_name: trash
+    resource_name_prefix: null
     resource_type: ''
     base_type: stack
     resource_description: null
-    owner:
-      auth_id: 01JQF53YK93TACRVTQ1WJG18XM
+    owner: {}
+    custom_attributes: null
     capacity: null
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JQF53ZRQHZ38NRRKEYWNXJWJ
+  resource_id: 01JR8KQQQCJM1RYT570WD1MR2V
 - location_name: camera_station
   location_id: 01JQF4V58DPD3XHVEBRSDDNH2H
   description: Camera Station
@@ -166,16 +170,17 @@ locations:
     - 995.074
   resource_definition:
     resource_name: camera_station
+    resource_name_prefix: null
     resource_type: ''
     base_type: slot
     resource_description: null
-    owner:
-      auth_id: 01JQF53YK9C2RAQE5NNCV9CR7A
+    owner: {}
+    custom_attributes: null
     capacity: 1
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JQF53ZV562M0XAZXJMQ7F3NP
+  resource_id: 01JR8KQQQR11PFJQGRJNX2B0PZ
 - location_name: ot2_gamma_deck_2
   location_id: 01JQF4V58D93AK35CPC6T8HHWA
   description: Deck 2 on OT2 gamma
@@ -189,14 +194,15 @@ locations:
     - -946.818
   resource_definition:
     resource_name: ot2_gamma_deck2
+    resource_name_prefix: null
     resource_type: ''
     base_type: slot
     resource_description: null
-    owner:
-      auth_id: 01JQF53YK940V3V3TVYXQX4VCP
+    owner: {}
+    custom_attributes: null
     capacity: 1
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JQF53ZVVNFAP75GHA18CTYYJ
+  resource_id: 01JR8KMYVCY9MMA7BD19NWCS2N
 workcell_directory: ~/.madsci/workcells/autobots_wc

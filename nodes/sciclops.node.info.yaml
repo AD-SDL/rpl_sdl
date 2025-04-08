@@ -18,10 +18,10 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - get_location
-  - unlock
   - reset
+  - unlock
   - shutdown
+  - get_location
   - lock
 commands: {}
 is_template: false
@@ -79,6 +79,28 @@ actions:
       target:
         name: target
         description: Exchange to place plate
+        argument_type: location
+        required: true
+        default: null
+    files: {}
+    results: {}
+    blocking: false
+    asynchronous: true
+  return_plate:
+    name: return_plate
+    description: Get a plate from a stack position and move it to transfer point (or
+      trash)
+    args: {}
+    locations:
+      source:
+        name: source
+        description: Exchange to get plate from
+        argument_type: location
+        required: true
+        default: null
+      target:
+        name: target
+        description: Tower to place plate
         argument_type: location
         required: true
         default: null
@@ -208,10 +230,6 @@ config_schema:
     OwnershipInfo:
       description: Information about the ownership of a MADSci object.
       properties:
-        auth_id:
-          description: The ID of the auth that owns the object.
-          title: Auth ID
-          type: string
         user_id:
           anyOf:
           - type: string

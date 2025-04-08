@@ -1,4 +1,4 @@
-node_name: ot2_gamma
+node_name: gamma
 node_id: 01JQF8FYR6N7FXT2QC2EJWQX94
 node_url: null
 node_description: Node for the OT2 Beta in the RPL Workcell
@@ -18,17 +18,18 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - shutdown
-  - pause
-  - unlock
-  - lock
-  - resume
   - cancel
-  - reset
+  - lock
   - safety_stop
+  - pause
+  - shutdown
+  - resume
+  - reset
+  - unlock
 commands: {}
 is_template: false
 config_defaults:
   host: parker.cels.anl.gov
   port: 2003
   ot2_ip: 146.137.240.102
+  resource_server_url: http://parker.cels.anl.gov:8003

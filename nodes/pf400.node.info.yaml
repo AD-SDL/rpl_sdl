@@ -18,20 +18,21 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - lock
   - resume
-  - unlock
-  - cancel
-  - pause
   - safety_stop
-  - shutdown
   - reset
+  - pause
+  - shutdown
+  - unlock
+  - lock
+  - cancel
 commands: {}
 is_template: false
 config_defaults:
   host: 0.0.0.0
   port: 2002
   pf400_ip: 146.137.240.35
+  resource_manager_url: http://parker.cels.anl.gov:8003
 actions:
   transfer:
     name: transfer
@@ -231,7 +232,7 @@ config:
   port: 2002
   protocol: http
   pf400_ip: 146.137.240.35
-  resource_manager_url: null
+  resource_manager_url: http://parker.cels.anl.gov:8003/
 config_schema:
   $defs:
     EventClientConfig:
@@ -272,10 +273,6 @@ config_schema:
     OwnershipInfo:
       description: Information about the ownership of a MADSci object.
       properties:
-        auth_id:
-          description: The ID of the auth that owns the object.
-          title: Auth ID
-          type: string
         user_id:
           anyOf:
           - type: string
@@ -394,7 +391,9 @@ config_schema:
       type: string
     resource_manager_url:
       anyOf:
-      - type: string
+      - format: uri
+        minLength: 1
+        type: string
       - type: 'null'
       default: null
       title: Resource Manager Url

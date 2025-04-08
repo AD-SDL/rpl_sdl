@@ -8,3 +8,5 @@ static_files_path: /home/madsci/ui/dist
 managers:
   workcell_manager: http://parker.cels.anl.gov:8013
   resource_manager: http://parker.cels.anl.gov:8003
+  data_manager: http://parker.cels.anl.gov:8004
+  experiment_manager: http://parker.cels.anl.gov:8002

@@ -1,4 +1,6 @@
 name: rpl_sdl
+include:
+  - frigate/rpl_frigate.compose.yaml
 services:
   # * Databases and infra
   rpl_mongodb:
@@ -6,11 +8,15 @@ services:
     image: mongo:8.0
     ports:
       - 27017:27017
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci/mongodb:/data/db
   rpl_redis:
     container_name: rpl_redis
     image: redis:7.4
     ports:
       - 6379:6379
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci/redis:/data
   rpl_postgres:
     container_name: rpl_postgres
     image: postgres:17
@@ -20,6 +26,8 @@ services:
       - POSTGRES_DB=resources
     ports:
       - 5432:5432
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci/postgres:/var/lib/postgresql/data
   # * MADSci Managers
   rpl_event_manager:
     container_name: rpl_event_manager
