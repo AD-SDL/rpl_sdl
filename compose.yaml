@@ -31,29 +31,28 @@ services:
   # * MADSci Managers
   rpl_event_manager:
     container_name: rpl_event_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ./managers:/home/madsci/managers
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.event_manager.event_server --definition /home/madsci/rpl/managers/rpl_sdl_event_manager.manager.yaml
+    command: python -m madsci.event_manager.event_server --definition managers/rpl_sdl_event_manager.manager.yaml
     depends_on:
       - rpl_mongodb
   autobots_wc_manager:
     container_name: autobots_wc_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ./workcells:/home/madsci/workcells
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}../MADSci/src/madsci_workcell_manager/ui:/home/madsci/ui
-    command: python -m madsci.workcell_manager.workcell_server --definition /home/madsci/rpl/workcells/autobots_wc.workcell.yaml
+    command: python -m madsci.workcell_manager.workcell_server --definition workcells/autobots_wc.workcell.yaml
     restart: on-failure
     depends_on:
       - rpl_redis
@@ -61,16 +60,16 @@ services:
       - rpl_data_manager
   lab_manager:
     container_name: lab_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+      - ./managers:/home/madsci/managers
       - ${LOCAL_WORKSPACE_FOLDER:-./}../MADSci/src/madsci_squid/ui:/home/madsci/ui
-    command: python -m madsci.squid.lab_server --definition /home/madsci/rpl/managers/rpl_sdl_lab_manager.manager.yaml
+      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+    command: python -m madsci.squid.lab_server --definition managers/rpl_sdl_lab_manager.manager.yaml
     restart: on-failure
     depends_on:
       - rpl_redis
@@ -78,51 +77,51 @@ services:
       - rpl_data_manager
   rpl_resource_manager:
     container_name: rpl_resource_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ./managers:/home/madsci/managers
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.resource_manager.resource_server --definition /home/madsci/rpl/managers/rpl_sdl_resource_manager.manager.yaml
+    command: python -m madsci.resource_manager.resource_server --definition managers/rpl_sdl_resource_manager.manager.yaml
     depends_on:
       - rpl_postgres
       - rpl_event_manager
   rpl_experiment_manager:
     container_name: rpl_experiment_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     restart: on-failure
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ./managers:/home/madsci/managers
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.experiment_manager.experiment_server --definition /home/madsci/rpl/managers/rpl_sdl_experiment_manager.manager.yaml
+    command: python -m madsci.experiment_manager.experiment_server --definition managers/rpl_sdl_experiment_manager.manager.yaml
     depends_on:
       - rpl_mongodb
       - rpl_event_manager
   rpl_data_manager:
     container_name: rpl_data_manager
-    image: madsci:latest
+    image: ghcr.io/ad-sdl/madsci:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
+      - ./managers:/home/madsci/managers
       - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m madsci.data_manager.data_server --definition /home/madsci/rpl/managers/rpl_data_manager.manager.yaml
+    command: python -m madsci.data_manager.data_server --definition managers/rpl_data_manager.manager.yaml
     depends_on:
       - rpl_mongodb
       - rpl_event_manager
-  #Nodes:
+  # * Nodes
   camera_1:
     container_name: camera1
-    image: camera_module:latest
+    image: ghcr.io/ad-sdl/camera_module:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -130,47 +129,40 @@ services:
     devices:
       - /dev/video0:/dev/video0
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m camera_rest_node --definition /home/madsci/rpl/nodes/camera_1.node.yaml
+      - ./nodes:/home/madsci/nodes
+    command: python -m camera_rest_node --definition nodes/camera_1.node.yaml
   sciclops_node:
-    image: sciclops:latest
+    image: ghcr.io/ad-sdl/sciclops_module:latest
     container_name: sciclops_node
     environment:
       - USER_ID=0
       - GROUP_ID=0
-    # (Will not connect to usb unless user is root :()
-    ports:
-      - 2001:2001
+    # Will not connect to usb unless user is root :(
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
+      - ./nodes:/home/madsci/nodes
       - /dev:/dev
-    command: python -m sciclops_rest_node --definition /home/madsci/rpl/nodes/sciclops.node.yaml
+    command: python -m sciclops_rest_node --definition nodes/sciclops.node.yaml
+    network_mode: host
     privileged: true
     restart: unless-stopped
   pf400_node:
-    image: pf400:latest
+    image: ghcr.io/ad-sdl/pf400_module:latest
     container_name: pf400_node
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    ports:
-      - 2002:2002
-    volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m pf400_rest_node --definition /home/madsci/rpl/nodes/pf400.node.yaml
-    privileged: true
-    restart: unless-stopped
-  ot2_gamma:
-    container_name: ot2_gamma
-    image: ot2:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
     network_mode: host
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/home/madsci/rpl/
-      - ${LOCAL_WORKSPACE_FOLDER:-./}.madsci:/home/madsci/.madsci/
-    command: python -m ot2_rest_node --definition /home/madsci/rpl/nodes/ot2_gamma.node.yaml
+      - ./nodes:/home/madsci/nodes
+    command: python -m pf400_rest_node --definition nodes/pf400.node.yaml
+    restart: unless-stopped
+  ot2_gamma:
+    container_name: ot2_gamma
+    image: ghcr.io/ad-sdl/ot2_module:latest
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    network_mode: host
+    volumes:
+      - ./nodes:/home/madsci/nodes
+    command: python -m ot2_rest_node --definition nodes/ot2_gamma.node.yaml

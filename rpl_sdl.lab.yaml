@@ -1,9 +1,0 @@
-name: rpl_sdl
-lab_id: 01JP3AYQQPKX9PHDJEV8GX7YDR
-description: The Rapid Prototyping Laboratory's in-house Self Driving Laboratory
-host: 127.0.0.1
-port: 8000
-commands: {}
-managers: {}
-  # autobots_wc:
-  #   path: ./workcells/autobots_wc.workcell.yaml
