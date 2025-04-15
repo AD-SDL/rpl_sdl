@@ -18,18 +18,18 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - reset
-  - cancel
-  - lock
-  - safety_stop
-  - unlock
-  - resume
   - pause
+  - unlock
+  - reset
+  - resume
+  - cancel
+  - safety_stop
   - shutdown
+  - lock
 commands: {}
 is_template: false
 config_defaults:
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   port: 2002
   pf400_ip: 146.137.240.35
   resource_manager_url: http://parker.cels.anl.gov:8003
@@ -228,7 +228,7 @@ config:
   state_update_interval: 2.0
   event_client_config: null
   resource_server_url: null
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   port: 2002
   protocol: http
   pf400_ip: 146.137.240.35

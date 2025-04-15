@@ -3,7 +3,7 @@ manager_id: 01JP3DE16DNQGGKQV6RM2JJQTN
 description: The primary resource manager for the RPL SDL
 manager_type: resource_manager
 url: http://parker.cels.anl.gov:8003
-host: 0.0.0.0
+host: parker.cels.anl.gov
 port: 8003
 db_url: postgresql://rpl:rpl@localhost:5432/resources
 event_client_config:

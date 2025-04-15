@@ -19,13 +19,13 @@ capabilities:
   get_log: true
   admin_commands:
   - lock
-  - unlock
   - reset
   - shutdown
+  - unlock
 commands: {}
 is_template: false
 config_defaults:
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   camera_address: /dev/video0
   port: 2000
 actions:
@@ -56,7 +56,7 @@ config:
   state_update_interval: 2.0
   event_client_config: null
   resource_server_url: null
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   port: 2000
   protocol: http
   camera_address: /dev/video0

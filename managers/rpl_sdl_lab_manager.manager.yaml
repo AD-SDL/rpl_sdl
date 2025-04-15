@@ -2,7 +2,7 @@ name: RPL_SDL_Lab_Manager
 description: The squid lab manager for the RPL SDL
 manager_type: lab_manager
 url: http://parker.cels.anl.gov:8000
-host: 0.0.0.0
+host: parker.cels.anl.gov
 port: 8000
 static_files_path: /home/madsci/ui/dist
 managers:

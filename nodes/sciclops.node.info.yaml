@@ -18,15 +18,15 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - unlock
   - get_location
-  - lock
-  - shutdown
+  - unlock
   - reset
+  - shutdown
+  - lock
 commands: {}
 is_template: false
 config_defaults:
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   port: 2001
   vendor_id: 29971
   product_id: 2
@@ -165,7 +165,7 @@ config:
   state_update_interval: 2.0
   event_client_config: null
   resource_server_url: null
-  host: 0.0.0.0
+  host: parker.cels.anl.gov
   port: 2001
   protocol: http
   vendor_id: 29971

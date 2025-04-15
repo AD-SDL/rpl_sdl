@@ -1,6 +1,4 @@
 name: rpl_sdl
-include:
-  - frigate/rpl_frigate.compose.yaml
 services:
   # * Databases and infra
   rpl_mongodb:
