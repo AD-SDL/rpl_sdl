@@ -58,7 +58,7 @@ services:
       - rpl_data_manager
   lab_manager:
     container_name: lab_manager
-    image: ghcr.io/ad-sdl/madsci:latest
+    image: ghcr.io/ad-sdl/madsci_dashboard:latest
     environment:
       - USER_ID=1000
       - GROUP_ID=1000

@@ -18,14 +18,14 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - lock
-  - shutdown
-  - unlock
-  - resume
-  - reset
-  - safety_stop
   - pause
+  - unlock
+  - shutdown
+  - reset
+  - resume
+  - lock
   - cancel
+  - safety_stop
 commands: {}
 is_template: false
 config_defaults:
