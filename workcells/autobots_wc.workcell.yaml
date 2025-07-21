@@ -2,138 +2,12 @@ workcell_name: autobots_wc
 manager_type: workcell_manager
 workcell_id: 01JP3B5TE2FRNADGSJEVWMKQ56
 description: The main modular workcell in the RPL
-config:
-  host: parker.cels.anl.gov
-  port: 8013
-  workcells_directory: ~/.madsci/workcells
-  redis_host: localhost
-  redis_port: 6379
-  redis_password: null
-  event_client_config: null
-  scheduler_update_interval: 2.0
-  node_update_interval: 1.0
-  auto_start: true
-  clear_workflows: false
-  cold_start_delay: 0
-  scheduler: madsci.workcell_manager.schedulers.default_scheduler
-  data_server_url: http://parker.cels.anl.gov:8004/
-  resource_server_url: http://parker.cels.anl.gov:8003/
-  mongo_url: null
-  static_files_path: /home/madsci/ui/dist
-  get_action_result_retries: 3
 nodes:
-  barty: http://kirby.cels.anl.gov:8000
-  camera_1: http://parker.cels.anl.gov:2000
-  ot2_gamma: http://parker.cels.anl.gov:2003
-  pf400: http://parker.cels.anl.gov:2002
-  sciclops: http://parker.cels.anl.gov:2001
+  barty: http://kirby.cels.anl.gov:8000/
+  camera_1: http://parker.cels.anl.gov:2000/
+  ot2_gamma: http://parker.cels.anl.gov:2003/
+  pf400: http://parker.cels.anl.gov:2002/
 locations:
-- location_name: tower1
-  location_id: 01JQ4SKEXHJ7KEAQCSAW4RR767
-  description: Sciclops tower 1
-  lookup:
-    sciclops:
-      P: 8.6648
-      R: 133.5
-      Y: 171.9895
-      Z: 23.5188
-  resource_definition:
-    resource_name: tower1
-    resource_name_prefix: null
-    resource_type: ''
-    base_type: stack
-    resource_description: null
-    owner: {}
-    custom_attributes: null
-    capacity: 20
-    default_children: null
-    default_child_template: null
-    default_child_quantity: null
-  resource_id: 01JR8KQQMP8MRKY5C8JJ0Y07F0
-- location_name: tower2
-  location_id: 01JQ4SKEXHZKKM8FCDWCTVT9Q5
-  description: Sciclops tower 2
-  lookup:
-    sciclops:
-      P: 8.4943
-      R: 151.3
-      Y: 171.4872
-      Z: 23.5188
-  resource_definition: null
-  resource_id: null
-- location_name: tower3
-  location_id: 01JQ4SKEXH42CBRS7Q5WEM34N3
-  description: Sciclops tower 3
-  lookup:
-    sciclops:
-      P: 12.4716
-      R: 169.5
-      Y: 171.481
-      Z: 23.5188
-  resource_definition: null
-  resource_id: null
-- location_name: tower4
-  location_id: 01JQ4SKEXHS4XBDBBY5BWGC6B1
-  description: Sciclops tower 4
-  lookup:
-    sciclops:
-      P: 5.9091
-      R: 187.5
-      Y: 169.447
-      Z: 23.5188
-  resource_definition: null
-  resource_id: null
-- location_name: tower5
-  location_id: 01JQ4SKEXHQV4TJK7YHTHXY98J
-  description: Sciclops tower 5
-  lookup:
-    sciclops:
-      P: 10.8807
-      R: 205.4
-      Y: 171.2082
-      Z: 23.5188
-  resource_definition: null
-  resource_id: null
-- location_name: exchange
-  location_id: 01JQ4SKEXH8B0RYBANYCWQ9Q2W
-  description: Sciclops to PF400 exchange location
-  lookup:
-    pf400:
-    - 223.0
-    - -38.068
-    - 335.876
-    - 325.434
-    - 79.923
-    - 995.062
-    sciclops:
-      P: 100.8955
-      R: 109.2741
-      Y: 32.7484
-      Z: 23.5188
-  resource_definition:
-    resource_name: exchange
-    resource_name_prefix: null
-    resource_type: ''
-    base_type: slot
-    resource_description: null
-    owner: {}
-    custom_attributes: null
-    capacity: 1
-    default_children: null
-    default_child_template: null
-    default_child_quantity: null
-  resource_id: 01JR8KQQQ2SV225A915DXA5A7F
-- location_name: neutral
-  location_id: 01JQ4SKEXHDN9T09HDYTWMVBBJ
-  description: Neutral joints for the sciclops
-  lookup:
-    sciclops:
-      P: 98.2955
-      R: 109.2741
-      Y: 32.7484
-      Z: 23.5188
-  resource_definition: null
-  resource_id: null
 - location_name: trash
   location_id: 01JQ9XAW9GF4RB1HWQXD7T674Q
   description: Trash position for the pf400
@@ -148,7 +22,7 @@ locations:
   resource_definition:
     resource_name: trash
     resource_name_prefix: null
-    resource_type: ''
+    resource_class: ''
     base_type: stack
     resource_description: null
     owner: {}
@@ -157,13 +31,13 @@ locations:
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JR8KQQQCJM1RYT570WD1MR2V
+    resource_type: ''
 - location_name: camera_station
   location_id: 01JQF4V58DPD3XHVEBRSDDNH2H
   description: Camera Station
   lookup:
     pf400:
-    - 90.597
+    - 94.597
     - 26.416
     - 66.422
     - 714.811
@@ -172,7 +46,7 @@ locations:
   resource_definition:
     resource_name: camera_station
     resource_name_prefix: null
-    resource_type: ''
+    resource_class: ''
     base_type: slot
     resource_description: null
     owner: {}
@@ -181,7 +55,7 @@ locations:
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JR8KQQQR11PFJQGRJNX2B0PZ
+    resource_type: ''
 - location_name: ot2_gamma_deck_2
   location_id: 01JQF4V58D93AK35CPC6T8HHWA
   description: Deck 2 on OT2 gamma
@@ -196,7 +70,7 @@ locations:
   resource_definition:
     resource_name: ot2_gamma_deck2
     resource_name_prefix: null
-    resource_type: ''
+    resource_class: ''
     base_type: slot
     resource_description: null
     owner: {}
@@ -205,5 +79,5 @@ locations:
     default_children: null
     default_child_template: null
     default_child_quantity: null
-  resource_id: 01JR8KMYVCY9MMA7BD19NWCS2N
+    resource_type: ''
 workcell_directory: ~/.madsci/workcells/autobots_wc

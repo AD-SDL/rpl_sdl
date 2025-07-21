@@ -1,0 +1,40 @@
+services:
+  # * Nodes
+  camera_1:
+    container_name: camera1
+    image: ghcr.io/ad-sdl/camera_module:latest
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    env_file: ../.env
+    network_mode: host
+    devices:
+      - /dev/video0:/dev/video0
+    volumes:
+      - ../nodes:/home/madsci/nodes
+    command: python -m camera_rest_node --node_definition nodes/camera_1.node.yaml --camera_address /dev/video0 --node_url http://parker.cels.anl.gov:2000
+  pf400_node:
+    image: ghcr.io/ad-sdl/pf400_module:latest
+    container_name: pf400_node
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+      - NODE_PF400_IP=146.137.240.35
+      - NODE_URL=http://parker.cels.anl.gov:2002
+    env_file: ../.env
+    network_mode: host
+    volumes:
+      - ../nodes:/home/madsci/nodes
+    command: python -m pf400_rest_node --node_definition nodes/pf400.node.yaml
+    restart: unless-stopped
+  ot2_gamma:
+    container_name: ot2_gamma
+    image: ghcr.io/ad-sdl/ot2_module
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    env_file: ../.env
+    network_mode: host
+    volumes:
+      - ../nodes:/home/madsci/nodes
+    command: python -m ot2_rest_node --node_definition nodes/ot2_gamma.node.yaml --ot2_ip ${OT2_IP:-146.137.240.102} --node_url http://parker.cels.anl.gov:2003

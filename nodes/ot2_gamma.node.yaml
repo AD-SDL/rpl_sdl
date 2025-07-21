@@ -1,35 +1,7 @@
 node_name: gamma
 node_id: 01JQF8FYR6N7FXT2QC2EJWQX94
-node_url: null
 node_description: Node for the OT2 Beta in the RPL Workcell
 node_type: device
 module_name: ot2_module
-module_version: 0.0.1
-capabilities:
-  get_info: true
-  get_state: true
-  get_status: true
-  send_action: true
-  get_action_result: true
-  get_action_history: true
-  action_files: true
-  send_admin_commands: true
-  set_config: true
-  get_resources: false
-  get_log: true
-  admin_commands:
-  - pause
-  - unlock
-  - shutdown
-  - reset
-  - resume
-  - lock
-  - cancel
-  - safety_stop
-commands: {}
-is_template: false
-config_defaults:
-  host: parker.cels.anl.gov
-  port: 2003
-  ot2_ip: 146.137.240.102
-  resource_server_url: http://parker.cels.anl.gov:8003
+module_version: 2.1.0
+capabilities: null

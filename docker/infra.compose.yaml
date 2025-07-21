@@ -1,0 +1,36 @@
+services:
+  # * Databases and infra
+  rpl_mongodb:
+    container_name: rpl_mongodb
+    image: mongo:8.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/mongodb:/data/db
+  rpl_redis:
+    container_name: rpl_redis
+    image: redis:7.4
+    ports:
+      - 6379:6379
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/redis:/data
+  rpl_postgres:
+    container_name: rpl_postgres
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=rpl
+      - POSTGRES_PASSWORD=rpl
+      - POSTGRES_DB=resources
+    ports:
+      - 5432:5432
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgres:/var/lib/postgresql/data
+  rpl_uptime:
+    image: louislam/uptime-kuma
+    container_name: rpl_uptime
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/uptime:/app/data
+    ports:
+      # <Host Port>:<Container Port>
+      - 9001:3001
+    restart: unless-stopped
