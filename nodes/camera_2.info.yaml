@@ -1,8 +1,8 @@
-node_name: gamma
-node_id: 01JQF8FYR6N7FXT2QC2EJWQX94
-node_description: Node for the OT2 Beta in the RPL Workcell
+node_name: camera_2
+node_id: 01K7T16X7EZV6EVE26H8S45CKS
+node_description: The rpl's camera node
 node_type: device
-module_name: ot2_module
+module_name: camera_module
 module_version: 2.1.0
 capabilities:
   get_info: true
@@ -18,34 +18,68 @@ capabilities:
   get_resources: false
   get_log: true
   admin_commands:
-  - cancel
   - lock
-  - pause
   - reset
-  - resume
-  - safety_stop
   - shutdown
   - unlock
 node_url: null
 actions:
-  run_protocol:
-    name: run_protocol
-    description: run a given opentrons protocol
+  take_picture:
+    name: take_picture
+    description: Action that takes a picture using the configured camera. The focus
+      used can be set using the focus parameter.
     args:
-      parameters:
-        name: parameters
-        description: Parameters for insertion into the protocol
-        argument_type: dict[str, Any]
+      focus:
+        name: focus
+        description: ''
+        argument_type: int
         required: false
-        default: {}
-    locations: {}
-    files:
-      protocol:
-        name: protocol
-        description: Protocol File
-        argument_type: file
-        required: true
         default: null
+      autofocus:
+        name: autofocus
+        description: ''
+        argument_type: bool
+        required: false
+        default: null
+    locations: {}
+    files: {}
+    results:
+      file:
+        result_label: file
+        description: null
+        result_type: file
+    blocking: false
+    asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
+  read_barcode:
+    name: read_barcode
+    description: "\n        Takes an image and returns the values of any barcodes\
+      \ present in the image. Camera focus can be adjusted using the provided parameters\
+      \ if necessary.\n\n        Args:\n            camera (cv2.VideoCapture): The\
+      \ camera object to adjust focus for.\n            focus (Optional[int]): The\
+      \ desired focus value (used if autofocus is disabled).\n            autofocus\
+      \ (Optional[bool]): Whether to enable or disable autofocus.\n\n        Returns:\n\
+      \            ActionSucceded regardless of if barcode is collected or not.\n\
+      \            Barcode field in ActionResult data dictionary will contain 'None'\
+      \ if no barcode was collected\n\n        "
+    args:
+      focus:
+        name: focus
+        description: ''
+        argument_type: int
+        required: false
+        default: null
+      autofocus:
+        name: autofocus
+        description: ''
+        argument_type: bool
+        required: false
+        default: null
+    locations: {}
+    files: {}
     results:
       json_result:
         result_label: json_result
@@ -54,13 +88,16 @@ actions:
         json_schema:
           properties:
             data:
-              additionalProperties: true
               title: Data
-              type: object
+              type: string
           required:
           - data
-          title: dictModel
+          title: strModel
           type: object
+      file:
+        result_label: file
+        description: null
+        result_type: file
     blocking: false
     asynchronous: true
     accepts_var_args: false
@@ -68,16 +105,16 @@ actions:
     var_args_schema: null
     var_kwargs_schema: null
 config:
-  node_definition: nodes/ot2_gamma.node.yaml
+  node_definition: nodes/camera_1.node.yaml
   node_info_path: null
   update_node_files: true
   status_update_interval: 2.0
   state_update_interval: 2.0
-  node_url: http://parker.cels.anl.gov:2003/
+  node_url: http://parker.cels.anl.gov:2000/
   uvicorn_kwargs: {}
-  ot2_ip: 146.137.240.102
+  camera_address: /dev/video0
 config_schema:
-  description: Configuration for the OT2 node module.
+  description: Configuration for the camera node module.
   properties:
     node_definition:
       anyOf:
@@ -134,11 +171,11 @@ config_schema:
       description: Configuration for the Uvicorn server that runs the REST API.
       title: Uvicorn Configuration
       type: object
-    ot2_ip:
+    camera_address:
       anyOf:
+      - type: integer
       - type: string
-      - type: 'null'
-      default: null
-      title: Ot2 Ip
-  title: OT2NodeConfig
+      default: 0
+      title: Camera Address
+  title: CameraNodeConfig
   type: object

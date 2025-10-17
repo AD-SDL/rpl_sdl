@@ -9,6 +9,7 @@ capabilities:
   get_state: true
   get_status: true
   send_action: true
+  get_action_status: true
   get_action_result: true
   get_action_history: true
   action_files: true
@@ -42,9 +43,67 @@ actions:
         default: null
     locations: {}
     files: {}
-    results: {}
+    results:
+      file:
+        result_label: file
+        description: null
+        result_type: file
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
+  read_barcode:
+    name: read_barcode
+    description: "\n        Takes an image and returns the values of any barcodes\
+      \ present in the image. Camera focus can be adjusted using the provided parameters\
+      \ if necessary.\n\n        Args:\n            camera (cv2.VideoCapture): The\
+      \ camera object to adjust focus for.\n            focus (Optional[int]): The\
+      \ desired focus value (used if autofocus is disabled).\n            autofocus\
+      \ (Optional[bool]): Whether to enable or disable autofocus.\n\n        Returns:\n\
+      \            ActionSucceded regardless of if barcode is collected or not.\n\
+      \            Barcode field in ActionResult data dictionary will contain 'None'\
+      \ if no barcode was collected\n\n        "
+    args:
+      focus:
+        name: focus
+        description: ''
+        argument_type: int
+        required: false
+        default: null
+      autofocus:
+        name: autofocus
+        description: ''
+        argument_type: bool
+        required: false
+        default: null
+    locations: {}
+    files: {}
+    results:
+      json_result:
+        result_label: json_result
+        description: null
+        result_type: json
+        json_schema:
+          properties:
+            data:
+              title: Data
+              type: string
+          required:
+          - data
+          title: strModel
+          type: object
+      file:
+        result_label: file
+        description: null
+        result_type: file
+    blocking: false
+    asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
 config:
   node_definition: nodes/camera_1.node.yaml
   node_info_path: null
@@ -118,5 +177,5 @@ config_schema:
       - type: string
       default: 0
       title: Camera Address
-  title: CameraConfig
+  title: CameraNodeConfig
   type: object

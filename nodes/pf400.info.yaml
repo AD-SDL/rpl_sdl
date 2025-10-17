@@ -9,6 +9,7 @@ capabilities:
   get_state: true
   get_status: true
   send_action: true
+  get_action_status: true
   get_action_result: true
   get_action_history: true
   action_files: true
@@ -68,10 +69,20 @@ actions:
         argument_type: location
         required: false
         default: null
+      rotation_deck:
+        name: rotation_deck
+        description: Plate rotation deck location
+        argument_type: location
+        required: false
+        default: null
     files: {}
     results: {}
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
   pick_plate:
     name: pick_plate
     description: Pick a plate from a source location
@@ -93,6 +104,10 @@ actions:
     results: {}
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
   place_plate:
     name: place_plate
     description: Place a plate in a target location, optionally moving first to target_approach
@@ -114,6 +129,10 @@ actions:
     results: {}
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
   remove_lid:
     name: remove_lid
     description: Remove a lid from a plate
@@ -165,6 +184,10 @@ actions:
     results: {}
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
   replace_lid:
     name: replace_lid
     description: Replace a lid on a plate
@@ -216,6 +239,10 @@ actions:
     results: {}
     blocking: false
     asynchronous: true
+    accepts_var_args: false
+    accepts_var_kwargs: false
+    var_args_schema: null
+    var_kwargs_schema: null
 config:
   node_definition: nodes/pf400.node.yaml
   node_info_path: null

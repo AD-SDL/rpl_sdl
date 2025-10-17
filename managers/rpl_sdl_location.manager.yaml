@@ -1,0 +1,6 @@
+name: RPL SDL Location Manager
+description: The main location manager for the RPL SDL and Autobots Workcell
+manager_id: 01K60XH65MCA7JEEWY4D4S7PAT
+manager_type: location_manager
+locations: []
+transfer_capabilities: null

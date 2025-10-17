@@ -1,97 +1,81 @@
+x-service-template: &service-template
+  image: ghcr.io/ad-sdl/madsci:latest
+  build:
+    context: ../../MADSci
+    dockerfile: Dockerfile
+  environment:
+    - USER_ID=1000
+    - GROUP_ID=1000
+  env_file: ../.env
+  network_mode: host
+  volumes:
+    - ../managers:/home/madsci/managers
+    - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
+  restart: unless-stopped
+
 services:
   # * MADSci Managers
+
   rpl_event_manager:
+    <<: *service-template
     container_name: rpl_event_manager
-    image: ghcr.io/ad-sdl/madsci:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    volumes:
-      - ../managers:/home/madsci/managers
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
     command: python -m madsci.event_manager.event_server
     depends_on:
       - rpl_mongodb
+
   autobots_wc_manager:
+    <<: *service-template
     container_name: autobots_wc_manager
-    image: ghcr.io/ad-sdl/madsci:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    volumes:
-      - ../workcells:/home/madsci/workcells
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
     command: python -m madsci.workcell_manager.workcell_server
-    restart: on-failure
     depends_on:
       - rpl_redis
       - rpl_event_manager
       - rpl_data_manager
       - rpl_resource_manager
-  lab_manager:
-    container_name: lab_manager
+      - rpl_location_manager
+
+  rpl_lab_manager:
+    <<: *service-template
+    container_name: rpl_lab_manager
     image: ghcr.io/ad-sdl/madsci_dashboard:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    volumes:
-      - ../managers:/home/madsci/managers
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
+    build:
+      context: ../../MADSci
+      dockerfile: Dockerfile.dashboard
     command: python -m madsci.squid.lab_server
-    restart: on-failure
     depends_on:
       - rpl_redis
       - rpl_event_manager
       - rpl_data_manager
+
   rpl_resource_manager:
+    <<: *service-template
     container_name: rpl_resource_manager
-    image: ghcr.io/ad-sdl/madsci:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    volumes:
-      - ../managers:/home/madsci/managers
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
     command: python -m madsci.resource_manager.resource_server
     depends_on:
       - rpl_postgres
       - rpl_event_manager
+
   rpl_experiment_manager:
+    <<: *service-template
     container_name: rpl_experiment_manager
-    image: ghcr.io/ad-sdl/madsci:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    restart: on-failure
-    volumes:
-      - ../managers:/home/madsci/managers
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
     command: python -m madsci.experiment_manager.experiment_server
     depends_on:
       - rpl_mongodb
       - rpl_event_manager
+
   rpl_data_manager:
+    <<: *service-template
     container_name: rpl_data_manager
-    image: ghcr.io/ad-sdl/madsci:latest
-    environment:
-      - USER_ID=1000
-      - GROUP_ID=1000
-    env_file: ../.env
-    network_mode: host
-    volumes:
-      - ../managers:/home/madsci/managers
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
     command: python -m madsci.data_manager.data_server
     depends_on:
       - rpl_mongodb
       - rpl_event_manager
+
+  rpl_location_manager:
+    <<: *service-template
+    container_name: rpl_location_manager
+    command: python -m madsci.location_manager.location_server
+    depends_on:
+      - rpl_redis
+      - rpl_event_manager
+      - rpl_resource_manager

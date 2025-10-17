@@ -1,0 +1,9 @@
+name: autobots_wc
+manager_type: workcell_manager
+manager_id: 01JP3B5TE2FRNADGSJEVWMKQ56
+description: The main modular workcell in the RPL
+nodes:
+  camera_1: http://parker.cels.anl.gov:2000/
+  pf400: http://parker.cels.anl.gov:2002/
+  ot2_gamma: http://parker.cels.anl.gov:2003/
+  barty: http://kirby.cels.anl.gov:8000/

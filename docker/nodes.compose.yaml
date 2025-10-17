@@ -3,6 +3,9 @@ services:
   camera_1:
     container_name: camera1
     image: ghcr.io/ad-sdl/camera_module:latest
+    build:
+      context: ../../camera_module
+      dockerfile: Dockerfile
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -13,8 +16,12 @@ services:
     volumes:
       - ../nodes:/home/madsci/nodes
     command: python -m camera_rest_node --node_definition nodes/camera_1.node.yaml --camera_address /dev/video0 --node_url http://parker.cels.anl.gov:2000
+
   pf400_node:
     image: ghcr.io/ad-sdl/pf400_module:latest
+    build:
+      context: ../../pf400_module
+      dockerfile: Dockerfile
     container_name: pf400_node
     environment:
       - USER_ID=1000
@@ -27,9 +34,13 @@ services:
       - ../nodes:/home/madsci/nodes
     command: python -m pf400_rest_node --node_definition nodes/pf400.node.yaml
     restart: unless-stopped
+
   ot2_gamma:
     container_name: ot2_gamma
     image: ghcr.io/ad-sdl/ot2_module
+    build:
+      context: ../../ot2_module
+      dockerfile: Dockerfile
     environment:
       - USER_ID=1000
       - GROUP_ID=1000

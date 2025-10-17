@@ -1,7 +1,7 @@
 name: RPL_SDL_Lab_Manager
 description: The squid lab manager for the RPL SDL
+manager_id: 01JY24S5JFEJ6VGNYGW71K51WE
 manager_type: lab_manager
-lab_id: 01JY24S5JFEJ6VGNYGW71K51WE
 managers:
   workcell_manager: http://parker.cels.anl.gov:8005
   resource_manager: http://parker.cels.anl.gov:8003
