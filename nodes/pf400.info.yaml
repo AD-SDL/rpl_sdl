@@ -86,7 +86,13 @@ actions:
   pick_plate:
     name: pick_plate
     description: Pick a plate from a source location
-    args: {}
+    args:
+      source_plate_rotation:
+        name: source_plate_rotation
+        description: Orientation of the plate at the source, wide or narrow
+        argument_type: str
+        required: false
+        default: ''
     locations:
       source:
         name: source
@@ -111,7 +117,13 @@ actions:
   place_plate:
     name: place_plate
     description: Place a plate in a target location, optionally moving first to target_approach
-    args: {}
+    args:
+      target_plate_rotation:
+        name: target_plate_rotation
+        description: Final orientation of the plate at the target, wide or narrow
+        argument_type: str
+        required: false
+        default: ''
     locations:
       target:
         name: target

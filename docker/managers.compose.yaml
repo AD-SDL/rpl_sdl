@@ -1,5 +1,5 @@
 x-service-template: &service-template
-  image: ghcr.io/ad-sdl/madsci:latest
+  image: ghcr.io/ad-sdl/madsci:v0.5.2-rc.2
   build:
     context: ../../MADSci
     dockerfile: Dockerfile
