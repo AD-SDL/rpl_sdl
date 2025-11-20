@@ -58,13 +58,11 @@ actions:
     name: read_barcode
     description: "\n        Takes an image and returns the values of any barcodes\
       \ present in the image. Camera focus can be adjusted using the provided parameters\
-      \ if necessary.\n\n        Args:\n            camera (cv2.VideoCapture): The\
-      \ camera object to adjust focus for.\n            focus (Optional[int]): The\
-      \ desired focus value (used if autofocus is disabled).\n            autofocus\
-      \ (Optional[bool]): Whether to enable or disable autofocus.\n\n        Returns:\n\
-      \            ActionSucceded regardless of if barcode is collected or not.\n\
-      \            Barcode field in ActionResult data dictionary will contain 'None'\
-      \ if no barcode was collected\n\n        "
+      \ if necessary.\n\n        Args:\n            focus (Optional[int]): The desired\
+      \ focus value (used if autofocus is disabled).\n            autofocus (Optional[bool]):\
+      \ Whether to enable or disable autofocus.\n\n        Returns:\n            A\
+      \ tuple containing:\n                - The barcode string (empty if no barcode\
+      \ found)\n                - Path to the captured image\n\n        "
     args:
       focus:
         name: focus
