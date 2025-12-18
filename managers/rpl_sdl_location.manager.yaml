@@ -2,5 +2,103 @@ name: RPL SDL Location Manager
 description: The main location manager for the RPL SDL and Autobots Workcell
 manager_id: 01K60XH65MCA7JEEWY4D4S7PAT
 manager_type: location_manager
-locations: []
+locations:
+- location_name: camera_station
+  location_id: 01KAY0F6JXKZCCACP196J29NED
+  description: null
+  representations:
+    pf400:
+    - 102.162
+    - 26.226
+    - 67.451
+    - 712.056
+    - 71.524
+    - 995.235
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: camera_station_approach
+  location_id: 01KCHS3JCSZZJPKMKGKJ3DTSTW
+  description: null
+  representations:
+    pf400:
+    - 166.87
+    - 0.648
+    - 98.948
+    - 706.188
+    - 70.855
+    - 995.16
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: ot2_gamma.deck_2
+  location_id: 01KAY0K760QY782SC7DGQSX9HB
+  description: null
+  representations:
+    pf400:
+    - 164
+    - 58.489
+    - 86.752
+    - 661.513
+    - 122.221
+    - -994.035
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: ot2_gamma.safe_approach
+  location_id: 01KCHSR3G60WQ0ZGDWG4GWQ8G4
+  description: null
+  representations:
+    pf400:
+    - 251.587
+    - 43.132
+    - 121.003
+    - 641.075
+    - 70.814
+    - -991.142
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: pf400.rotation_deck
+  location_id: 01KAY0D6VJK9E249HJG4GEVJ8C
+  description: null
+  representations:
+    pf400:
+    - 63
+    - -27.659
+    - 113.485
+    - 631.997
+    - 72.163
+    - 994.458
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: pf400.rotation_deck_approach
+  location_id: 01KCHSNBSH2XNV6WRR4NHHXQH5
+  description: null
+  representations:
+    pf400:
+    - 181.008
+    - -22.37
+    - 136.727
+    - 603.393
+    - 70.873
+    - 994.487
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
+- location_name: pf400.rotation_deck_wide
+  location_id: 01KC1YGPZYJRJTE91QR7T1VRDX
+  description: null
+  representations:
+    pf400:
+    - 63.005
+    - -40.629
+    - 84.041
+    - 764.556
+    - 114.132
+    - 995.256
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
 transfer_capabilities: null
