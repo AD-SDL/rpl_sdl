@@ -1,0 +1,17 @@
+{
+	"$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+	"packages": [
+		"python@latest",
+		"uv@latest",
+		"pdm@latest",
+		"just@latest",
+		"ruff@latest",
+		"pre-commit@latest"
+	],
+	"shell": {
+		"init_hook": ". $VENV_DIR/bin/activate"
+	},
+	"env": {
+		"PDM_USE_UV": "True"
+	}
+}

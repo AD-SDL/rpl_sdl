@@ -6,16 +6,22 @@ services:
     build:
       context: ../../camera_module
       dockerfile: Dockerfile
+    profiles:
+      - nodes
+      - '' # Empty string allows service to start when no --profile is specified
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
+      - NODE_CAMERA_ADDRESS=/dev/video0
+      - NODE_URL=http://parker.cels.anl.gov:2000
     env_file: ../.env
     network_mode: host
+    privileged: true
     devices:
       - /dev/video0:/dev/video0
     volumes:
-      - ../nodes:/home/madsci/nodes
-    command: python -m camera_rest_node --node_definition nodes/camera_1.node.yaml --camera_address /dev/video0 --node_url http://parker.cels.anl.gov:2000
+      - ../nodes/camera_1/settings.yaml:/home/madsci/settings.yaml
+      - ../.madsci:/home/madsci/.madsci
 
   pf400_node:
     image: ghcr.io/ad-sdl/pf400_module:latest
@@ -23,6 +29,9 @@ services:
       context: ../../pf400_module
       dockerfile: Dockerfile
     container_name: pf400_node
+    profiles:
+      - nodes
+      - '' # Empty string allows service to start when no --profile is specified
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
@@ -31,8 +40,8 @@ services:
     env_file: ../.env
     network_mode: host
     volumes:
-      - ../nodes:/home/madsci/nodes
-    command: python -m pf400_rest_node --node_definition nodes/pf400.node.yaml
+      - ../nodes/pf400/settings.yaml:/home/madsci/settings.yaml
+      - ../.madsci:/home/madsci/.madsci
     restart: unless-stopped
 
   ot2_gamma:
@@ -41,11 +50,36 @@ services:
     build:
       context: ../../ot2_module
       dockerfile: Dockerfile
+    profiles:
+      - nodes
+      - '' # Empty string allows service to start when no --profile is specified
     environment:
       - USER_ID=1000
       - GROUP_ID=1000
+      - NODE_OT2_IP=146.137.240.102
+      - NODE_URL=http://parker.cels.anl.gov:2003
     env_file: ../.env
     network_mode: host
     volumes:
-      - ../nodes:/home/madsci/nodes
-    command: python -m ot2_rest_node --node_definition nodes/ot2_gamma.node.yaml --ot2_ip ${OT2_IP:-146.137.240.102} --node_url http://parker.cels.anl.gov:2003
+      - ../nodes/gamma/settings.yaml:/home/madsci/settings.yaml
+      - ../.madsci:/home/madsci/.madsci
+
+        #ot2_beta:
+        #  container_name: ot2_beta
+        #  image: ghcr.io/ad-sdl/ot2_module
+        #  build:
+        #    context: ../../ot2_module
+        #    dockerfile: Dockerfile
+        #  profiles:
+        #    - nodes
+        #    - '' # Empty string allows service to start when no --profile is specified
+        #  environment:
+        #    - USER_ID=1000
+        #    - GROUP_ID=1000
+        #    - NODE_OT2_IP=146.137.240.101
+        #    - NODE_URL=http://parker.cels.anl.gov:2004
+        #  env_file: ../.env
+        #  network_mode: host
+        #  volumes:
+        #    - ../nodes/ot2_beta.node/settings.yaml:/home/madsci/settings.yaml
+        #    - ../.madsci:/home/madsci/.madsci

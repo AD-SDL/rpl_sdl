@@ -1,0 +1,5 @@
+# Migrated from ot2_gamma.node.yaml
+# Migration date: 2026-02-27T22:25:38.020937+00:00
+node_name: gamma
+node_description: Node for the OT2 Beta in the RPL Workcell
+node_module_name: ot2_module

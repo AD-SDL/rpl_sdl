@@ -1,0 +1,4 @@
+# Migrated from rpl_sdl_experiment.manager.yaml
+# Migration date: 2026-02-27T22:25:38.007613+00:00
+experiment_manager_name: RPL_SDL_Experiment_Manager
+experiment_manager_description: Manages experiment and campaign tracking for the RPL SDL

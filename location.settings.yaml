@@ -1,8 +1,8 @@
-name: RPL SDL Location Manager
-description: The main location manager for the RPL SDL and Autobots Workcell
-manager_id: 01K60XH65MCA7JEEWY4D4S7PAT
-manager_type: location_manager
-locations:
+# Migrated from rpl_sdl_location.manager.yaml
+# Migration date: 2026-02-27T22:25:38.011823+00:00
+location_manager_name: RPL SDL Location Manager
+location_manager_description: The main location manager for the RPL SDL and Autobots Workcell
+location_locations:
 - location_name: camera_station
   location_id: 01KAY0F6JXKZCCACP196J29NED
   description: null
@@ -31,17 +31,31 @@ locations:
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
+- location_name: ot2_beta.deck_2
+  location_id: 01KG37RG71M846EEH5W8RWZ8XK
+  description: null
+  representations:
+    pf400:
+    - 165.521
+    - -60.38
+    - 273.491
+    - 413.51
+    - 122.139
+    - -967.685
+  resource_template_name: null
+  resource_template_overrides: null
+  allow_transfers: true
 - location_name: ot2_gamma.deck_2
   location_id: 01KAY0K760QY782SC7DGQSX9HB
   description: null
   representations:
     pf400:
-    - 164
-    - 58.489
-    - 86.752
-    - 661.513
-    - 122.221
-    - -994.035
+    - 164.211
+    - 63.996
+    - 82.681
+    - 659.746
+    - 122.122
+    - -967.691
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
@@ -101,4 +115,3 @@ locations:
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
-transfer_capabilities: null

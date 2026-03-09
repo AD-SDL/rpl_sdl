@@ -1,7 +1,0 @@
-node_name: camera_1
-node_id: 01JPWT8SMHXFXDGMP35C5ND1JA
-node_description: The rpl's camera node
-node_type: device
-module_name: camera_module
-module_version: 2.1.0
-capabilities: null

@@ -1,0 +1,5 @@
+# Migrated from pf400.node.yaml
+# Migration date: 2026-02-27T22:25:38.023087+00:00
+node_name: pf400
+node_description: MADSci node for controlling PF400, plate handler robot
+node_module_name: pf400

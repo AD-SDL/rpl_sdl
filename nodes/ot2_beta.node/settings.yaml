@@ -1,0 +1,5 @@
+# Migrated from ot2_beta.node.yaml
+# Migration date: 2026-02-27T22:25:38.016581+00:00
+node_name: ot2_beta.node
+node_description: Node for the OT2 Beta in the RPL Workcell
+node_module_name: ot2_module

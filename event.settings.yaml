@@ -1,0 +1,4 @@
+# Migrated from rpl_sdl_event.manager.yaml
+# Migration date: 2026-02-27T22:25:38.000327+00:00
+event_manager_name: RPL_SDL_Event_Manager
+event_manager_description: A MADSci Event Manager for the RPL Self Driving Lab

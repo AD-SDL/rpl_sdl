@@ -1,0 +1,4 @@
+# Migrated from rpl_sdl_lab.manager.yaml
+# Migration date: 2026-02-27T22:25:37.997851+00:00
+lab_manager_name: RPL_SDL_Lab_Manager
+lab_manager_description: The squid lab manager for the RPL SDL

@@ -1,0 +1,5 @@
+# Migrated from camera_1.node.yaml
+# Migration date: 2026-02-27T22:25:38.018749+00:00
+node_name: camera_1
+node_description: The rpl's camera node
+node_module_name: camera_module
