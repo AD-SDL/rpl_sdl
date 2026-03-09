@@ -50,12 +50,12 @@ location_locations:
   description: null
   representations:
     pf400:
-    - 164.211
-    - 63.996
-    - 82.681
-    - 659.746
-    - 122.122
-    - -967.691
+    - 164.093
+    - 63.98
+    - 82.369
+    - 660.391
+    - 122.069
+    - -967.641
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
