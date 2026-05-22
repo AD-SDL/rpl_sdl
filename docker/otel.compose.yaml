@@ -1,0 +1,108 @@
+# OpenTelemetry Observability Stack for RPL SDL
+#
+# This compose file provides full observability infrastructure:
+# - OTEL Collector: Receives and routes telemetry data
+# - Jaeger: Distributed tracing UI (http://localhost:16686)
+# - Prometheus: Metrics collection and querying (http://localhost:9090)
+# - Loki: Log aggregation (http://localhost:3100)
+# - Grafana: Unified dashboards (http://localhost:3000)
+#
+# Usage:
+#   docker compose --profile otel up
+#
+# Default credentials:
+#   Grafana: admin / admin (change on first login)
+
+services:
+  # OTEL Collector — receives OTLP from managers/nodes and fans out to backends
+  rpl_otel_collector:
+    container_name: rpl_otel_collector
+    image: otel/opentelemetry-collector-contrib:0.96.0
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}otel-collector.yaml:/etc/otelcol/config.yaml:ro
+    command: ["--config=/etc/otelcol/config.yaml"]
+    depends_on:
+      - rpl_jaeger
+      - rpl_prometheus
+      - rpl_loki
+    profiles:
+      - otel
+
+  # Jaeger — Distributed Tracing
+  # UI: http://localhost:16686
+  rpl_jaeger:
+    container_name: rpl_jaeger
+    image: jaegertracing/all-in-one:1.54.0
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      # Use alternate ports so Jaeger's OTLP doesn't conflict with the collector's
+      - COLLECTOR_OTLP_GRPC_HOST_PORT=:14317
+      - COLLECTOR_OTLP_HTTP_HOST_PORT=:14318
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/jaeger:/badger
+    profiles:
+      - otel
+      - '' # Empty string allows service to start when no --profile is specified
+
+  # Prometheus — Metrics
+  # UI: http://localhost:9090
+  rpl_prometheus:
+    container_name: rpl_prometheus
+    image: prom/prometheus:v2.50.1
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}otel/prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/prometheus:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+      - "--web.enable-remote-write-receiver"
+    profiles:
+      - otel
+      - '' # Empty string allows service to start when no --profile is specified
+
+  # Loki — Log Aggregation
+  # API: http://localhost:3100
+  rpl_loki:
+    container_name: rpl_loki
+    image: grafana/loki:2.9.4
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}otel/loki.yaml:/etc/loki/local-config.yaml:ro
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/loki:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    profiles:
+      - otel
+      - '' # Empty string allows service to start when no --profile is specified
+
+  # Grafana — Unified Dashboards
+  # UI: http://localhost:3000 (admin/admin)
+  rpl_grafana:
+    container_name: rpl_grafana
+    image: grafana/grafana:10.3.3
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      # Enable anonymous access for local development (read-only)
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/grafana:/var/lib/grafana
+      - ${LOCAL_WORKSPACE_FOLDER:-../}otel/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - rpl_jaeger
+      - rpl_prometheus
+      - rpl_loki
+    profiles:
+      - otel
+      - '' # Empty string allows service to start when no --profile is specified

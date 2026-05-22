@@ -3,3 +3,4 @@ include:
   - docker/infra.compose.yaml
   - docker/managers.compose.yaml
   - docker/nodes.compose.yaml
+  - docker/otel.compose.yaml

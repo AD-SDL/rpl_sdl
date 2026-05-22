@@ -1,0 +1,29 @@
+# Prometheus Configuration for RPL SDL
+#
+# Minimal configuration designed to work with the OpenTelemetry Collector,
+# which pushes metrics via remote write. No scrape targets needed since
+# the collector handles all metric collection and forwarding.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: development
+    lab: rpl_sdl
+
+# Remote write receiver is enabled via command line flags in otel.compose.yaml
+# The collector pushes metrics to http://localhost:9090/api/v1/write
+
+# Optional: self-monitoring scrape targets
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          service: prometheus
+
+  - job_name: "otel-collector"
+    static_configs:
+      - targets: ["localhost:8888"]
+        labels:
+          service: otel-collector

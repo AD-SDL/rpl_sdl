@@ -25,7 +25,7 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.event_manager.event_server
     depends_on:
-      - rpl_mongodb
+      - rpl_ferretdb
 
   autobots_wc_manager:
     <<: *service-template
@@ -35,7 +35,7 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.workcell_manager.workcell_server
     depends_on:
-      - rpl_redis
+      - rpl_valkey
       - rpl_event_manager
       - rpl_data_manager
       - rpl_resource_manager
@@ -47,13 +47,13 @@ services:
     profiles:
       - managers
       - '' # Empty string allows service to start when no --profile is specified
-    image: ghcr.io/ad-sdl/madsci_dashboard:latest
+    image: ghcr.io/ad-sdl/madsci_dashboard:v0.8.0
     build:
       context: ../../MADSci
       dockerfile: docker/Dockerfile.dashboard
     command: python -m madsci.squid.lab_server
     depends_on:
-      - rpl_redis
+      - rpl_valkey
       - rpl_event_manager
       - rpl_data_manager
 
@@ -65,7 +65,7 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.resource_manager.resource_server
     depends_on:
-      - rpl_postgres
+      - rpl_postgres_resources
       - rpl_event_manager
 
   rpl_experiment_manager:
@@ -76,7 +76,7 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.experiment_manager.experiment_server
     depends_on:
-      - rpl_mongodb
+      - rpl_ferretdb
       - rpl_event_manager
 
   rpl_data_manager:
@@ -87,7 +87,7 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.data_manager.data_server
     depends_on:
-      - rpl_mongodb
+      - rpl_ferretdb
       - rpl_event_manager
 
   rpl_location_manager:
@@ -98,6 +98,6 @@ services:
       - '' # Empty string allows service to start when no --profile is specified
     command: python -m madsci.location_manager.location_server
     depends_on:
-      - rpl_redis
+      - rpl_valkey
       - rpl_event_manager
       - rpl_resource_manager
