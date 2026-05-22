@@ -7,19 +7,13 @@ location_locations:
   location_id: 01KAY0F6JXKZCCACP196J29NED
   description: null
   representations:
-    pf400:
-    - 102.162
-    - 26.226
-    - 67.451
-    - 712.056
-    - 71.524
-    - 995.235
+    pf400: [106.932,23.387,69.67,714.368,75.058,994.962]
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
 - location_name: camera_station_approach
   location_id: 01KCHS3JCSZZJPKMKGKJ3DTSTW
-  description: null
+  description: Approach waypoint for camera station
   representations:
     pf400:
     - 166.87
@@ -30,7 +24,7 @@ location_locations:
     - 995.16
   resource_template_name: null
   resource_template_overrides: null
-  allow_transfers: true
+  allow_transfers: false
 - location_name: ot2_beta.deck_2
   location_id: 01KG37RG71M846EEH5W8RWZ8XK
   description: null
@@ -49,19 +43,13 @@ location_locations:
   location_id: 01KAY0K760QY782SC7DGQSX9HB
   description: null
   representations:
-    pf400:
-    - 164.093
-    - 63.98
-    - 82.369
-    - 660.391
-    - 122.069
-    - -967.641
+    pf400: [161.545,63.775,82.928,660.028,122.093,-967.62]
   resource_template_name: null
   resource_template_overrides: null
   allow_transfers: true
 - location_name: ot2_gamma.safe_approach
   location_id: 01KCHSR3G60WQ0ZGDWG4GWQ8G4
-  description: null
+  description: Safe approach waypoint for OT-2 Gamma
   representations:
     pf400:
     - 251.587
@@ -72,24 +60,18 @@ location_locations:
     - -991.142
   resource_template_name: null
   resource_template_overrides: null
-  allow_transfers: true
+  allow_transfers: false
 - location_name: pf400.rotation_deck
   location_id: 01KAY0D6VJK9E249HJG4GEVJ8C
-  description: null
+  description: Rotation deck narrow grip position (used internally by PF400 transfer rotation logic)
   representations:
-    pf400:
-    - 63
-    - -27.659
-    - 113.485
-    - 631.997
-    - 72.163
-    - 994.458
+    pf400: [62.287,-27.703,113.691,631.713,75.088,994.854]
   resource_template_name: null
   resource_template_overrides: null
-  allow_transfers: true
+  allow_transfers: false
 - location_name: pf400.rotation_deck_approach
   location_id: 01KCHSNBSH2XNV6WRR4NHHXQH5
-  description: null
+  description: Approach waypoint for rotation deck
   representations:
     pf400:
     - 181.008
@@ -100,18 +82,63 @@ location_locations:
     - 994.487
   resource_template_name: null
   resource_template_overrides: null
-  allow_transfers: true
-- location_name: pf400.rotation_deck_wide
-  location_id: 01KC1YGPZYJRJTE91QR7T1VRDX
-  description: null
-  representations:
-    pf400:
-    - 63.005
-    - -40.629
-    - 84.041
-    - 764.556
-    - 114.132
-    - 995.256
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: true
+  allow_transfers: false
+# Transfer capabilities configuration
+location_transfer_capabilities:
+  transfer_templates: []
+  override_transfer_templates:
+    pair_overrides:
+      ot2_gamma.deck_2:
+        camera_station:
+          - node_name: pf400
+            action: transfer
+            source_argument_name: source
+            target_argument_name: target
+            cost_weight: 1.0
+            additional_args:
+              source_plate_rotation: "wide"
+              target_plate_rotation: "narrow"
+              grab_offset: 1.0
+            additional_location_args:
+              rotation_deck: pf400.rotation_deck
+              source_approach: ot2_gamma.safe_approach
+              target_approach: camera_station_approach
+      camera_station:
+        ot2_gamma.deck_2:
+          - node_name: pf400
+            action: transfer
+            source_argument_name: source
+            target_argument_name: target
+            cost_weight: 1.0
+            additional_args:
+              source_plate_rotation: "narrow"
+              target_plate_rotation: "wide"
+            additional_location_args:
+              rotation_deck: pf400.rotation_deck
+              source_approach: camera_station_approach
+              target_approach: ot2_gamma.safe_approach
+        ot2_beta.deck_2:
+          - node_name: pf400
+            action: transfer
+            source_argument_name: source
+            target_argument_name: target
+            cost_weight: 1.0
+            additional_args:
+              source_plate_rotation: "narrow"
+              target_plate_rotation: "wide"
+            additional_location_args:
+              rotation_deck: pf400.rotation_deck
+              source_approach: camera_station_approach
+      ot2_beta.deck_2:
+        camera_station:
+          - node_name: pf400
+            action: transfer
+            source_argument_name: source
+            target_argument_name: target
+            cost_weight: 1.0
+            additional_args:
+              source_plate_rotation: "wide"
+              target_plate_rotation: "narrow"
+            additional_location_args:
+              rotation_deck: pf400.rotation_deck
+              target_approach: camera_station_approach
