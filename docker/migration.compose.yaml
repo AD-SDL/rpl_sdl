@@ -1,0 +1,49 @@
+# Docker Compose overlay for the FOSS stack migration.
+# Brings up the OLD MongoDB / PostgreSQL / Redis containers on alternate ports,
+# pointed at the existing .madsci/ data directories, so `madsci migrate foss`
+# can dump data out of them and into the new FOSS stack.
+#
+# Differences from MADSci/examples/example_lab/compose.migration.yaml:
+#   - Old Postgres reads from .madsci/postgres/ (RPL convention) rather than
+#     .madsci/postgresql_old/data/ (example default).
+#   - Old Postgres uses rpl:rpl credentials matching the current data dir.
+#   - MinIO is omitted — current SDL does not use object storage.
+#
+# Usage:
+#   docker compose -f docker/infra.compose.yaml -f docker/migration.compose.yaml up -d \
+#     rpl_old_mongodb rpl_old_postgres rpl_old_redis
+#
+# See MADSci/docs/guides/foss_migration.md for the full migration guide.
+
+services:
+  rpl_old_mongodb:
+    container_name: rpl_old_mongodb
+    image: mongo:${OLD_MONGODB_VERSION:-8}
+    restart: "no"
+    ports:
+      - "${OLD_MONGODB_PORT:-27018}:27017"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/mongodb:/data/db
+
+  rpl_old_postgres:
+    container_name: rpl_old_postgres
+    image: ${OLD_POSTGRES_IMAGE:-postgres:17}
+    restart: "no"
+    environment:
+      - POSTGRES_USER=${OLD_POSTGRES_USER:-rpl}
+      - POSTGRES_PASSWORD=${OLD_POSTGRES_PASSWORD:-rpl}
+      - POSTGRES_DB=${OLD_POSTGRES_DB:-resources}
+    ports:
+      - "${OLD_POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgres:/var/lib/postgresql/data
+
+  rpl_old_redis:
+    container_name: rpl_old_redis
+    image: redis:${OLD_REDIS_VERSION:-7.4}
+    restart: "no"
+    ports:
+      - "${OLD_REDIS_PORT:-6380}:6379"
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/redis:/data
+    command: redis-server --appendonly yes

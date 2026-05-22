@@ -1,43 +1,73 @@
+# RPL SDL infrastructure services (FOSS stack, post-v0.8.0 migration).
+# Provides FerretDB (MongoDB-compatible), Valkey (Redis-compatible), and split PostgreSQL.
+# SeaweedFS (S3-compatible) is omitted — current SDL does not use object storage.
+
 services:
-  # * Databases and infra
-  rpl_mongodb:
-    container_name: rpl_mongodb
-    image: mongo:8.0
+  rpl_ferretdb:
+    container_name: rpl_ferretdb
+    image: ghcr.io/ferretdb/ferretdb:2
     profiles:
       - infra
       - managers
-      - '' # Empty string allows service to start when no --profile is specified
+      - ''
     ports:
       - 27017:27017
-    volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/mongodb:/data/db
-  rpl_redis:
-    container_name: rpl_redis
-    image: redis:7.4
+    environment:
+      - FERRETDB_POSTGRESQL_URL=postgres://madsci:madsci@rpl_ferretdb_postgres:5432/postgres
+    depends_on:
+      - rpl_ferretdb_postgres
+    restart: unless-stopped
+
+  rpl_valkey:
+    container_name: rpl_valkey
+    image: valkey/valkey:8
     profiles:
       - infra
       - managers
-      - '' # Empty string allows service to start when no --profile is specified
+      - ''
     ports:
       - 6379:6379
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/redis:/data
-    command: redis-server --appendonly yes --save 900 1 --save 300 10 --save 60 10000
-  rpl_postgres:
-    container_name: rpl_postgres
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/valkey:/data
+    command: valkey-server --appendonly yes --save 900 1 --save 300 10 --save 60 10000
+    restart: unless-stopped
+
+  # PostgreSQL with DocumentDB extension — used exclusively by FerretDB.
+  rpl_ferretdb_postgres:
+    container_name: rpl_ferretdb_postgres
+    image: ghcr.io/ferretdb/postgres-documentdb-dev:17-ferretdb
+    profiles:
+      - infra
+      - managers
+      - ''
+    environment:
+      - POSTGRES_USER=madsci
+      - POSTGRES_PASSWORD=madsci
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgresql/data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Standard PostgreSQL — used by the Resource Manager for relational data.
+  rpl_postgres_resources:
+    container_name: rpl_postgres_resources
     image: postgres:17
     profiles:
       - infra
       - managers
-      - '' # Empty string allows service to start when no --profile is specified
+      - ''
     environment:
-      - POSTGRES_USER=rpl
-      - POSTGRES_PASSWORD=rpl
+      - POSTGRES_USER=madsci
+      - POSTGRES_PASSWORD=madsci
       - POSTGRES_DB=resources
     ports:
-      - 5432:5432
+      - 5434:5432
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgres:/var/lib/postgresql/data
+      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgresql_resources/data:/var/lib/postgresql/data
+    restart: unless-stopped
+
   rpl_pgadmin:
     container_name: rpl_pgadmin
     image: dpage/pgadmin4
@@ -52,24 +82,15 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/pgadmin:/var/lib/pgadmin
     depends_on:
-      - rpl_postgres
-  rpl_redis_commander:
-    container_name: rpl_redis_commander
-    image: rediscommander/redis-commander
-    profiles:
-      - redis-commander
-    environment:
-      - REDIS_HOSTS=local:rpl_redis:6379
-    ports:
-      - 8081:8081
-    depends_on:
-      - rpl_redis
+      - rpl_postgres_resources
+      - rpl_ferretdb_postgres
+
   rpl_uptime:
     image: louislam/uptime-kuma
     container_name: rpl_uptime
     profiles:
       - infra
-      - '' # Empty string allows service to start when no --profile is specified
+      - ''
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/uptime:/app/data
     ports:
