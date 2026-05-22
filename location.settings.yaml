@@ -1,89 +1,10 @@
-# Migrated from rpl_sdl_location.manager.yaml
-# Migration date: 2026-02-27T22:25:38.011823+00:00
 location_manager_name: RPL SDL Location Manager
 location_manager_description: The main location manager for the RPL SDL and Autobots Workcell
-location_locations:
-- location_name: camera_station
-  location_id: 01KAY0F6JXKZCCACP196J29NED
-  description: null
-  representations:
-    pf400: [106.932,23.387,69.67,714.368,75.058,994.962]
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: true
-- location_name: camera_station_approach
-  location_id: 01KCHS3JCSZZJPKMKGKJ3DTSTW
-  description: Approach waypoint for camera station
-  representations:
-    pf400:
-    - 166.87
-    - 0.648
-    - 98.948
-    - 706.188
-    - 70.855
-    - 995.16
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: false
-- location_name: ot2_beta.deck_2
-  location_id: 01KG37RG71M846EEH5W8RWZ8XK
-  description: null
-  representations:
-    pf400:
-    - 165.521
-    - -60.38
-    - 273.491
-    - 413.51
-    - 122.139
-    - -967.685
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: true
-- location_name: ot2_gamma.deck_2
-  location_id: 01KAY0K760QY782SC7DGQSX9HB
-  description: null
-  representations:
-    pf400: [161.545,63.775,82.928,660.028,122.093,-967.62]
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: true
-- location_name: ot2_gamma.safe_approach
-  location_id: 01KCHSR3G60WQ0ZGDWG4GWQ8G4
-  description: Safe approach waypoint for OT-2 Gamma
-  representations:
-    pf400:
-    - 251.587
-    - 43.132
-    - 121.003
-    - 641.075
-    - 70.814
-    - -991.142
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: false
-- location_name: pf400.rotation_deck
-  location_id: 01KAY0D6VJK9E249HJG4GEVJ8C
-  description: Rotation deck narrow grip position (used internally by PF400 transfer rotation logic)
-  representations:
-    pf400: [62.287,-27.703,113.691,631.713,75.088,994.854]
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: false
-- location_name: pf400.rotation_deck_approach
-  location_id: 01KCHSNBSH2XNV6WRR4NHHXQH5
-  description: Approach waypoint for rotation deck
-  representations:
-    pf400:
-    - 181.008
-    - -22.37
-    - 136.727
-    - 603.393
-    - 70.873
-    - 994.487
-  resource_template_name: null
-  resource_template_overrides: null
-  allow_transfers: false
-# Transfer capabilities configuration
+
+# Lab-managed locations moved to locations.yaml (v0.8.0 LabLocationConfig format,
+# auto-discovered via walk-up). Hardware retraining is planned post-migration.
+
+# Transfer capabilities configuration (prefixed alias still resolves to transfer_capabilities in v0.8.0)
 location_transfer_capabilities:
   transfer_templates: []
   override_transfer_templates:

@@ -1,0 +1,54 @@
+# RPL SDL Lab Location Configuration (LabLocationConfig, v0.8.0+)
+#
+# All locations here are lab-managed. The ot2_*.deck_N entries SHOULD be
+# node-intrinsic (declared via intrinsic_locations ClassVar on the OT-2
+# node), but the v0.8.0 module refactor is deferred — they live here
+# temporarily until that follow-up lands.
+#
+# Calibration values are preserved from the v0.7.0 location.settings.yaml.
+# A hardware retraining pass is planned post-migration; treat these as
+# starting points, not authoritative.
+
+locations:
+
+  # ---- Camera station ----
+  - location_name: camera_station
+    representations:
+      pf400: [106.932, 23.387, 69.67, 714.368, 75.058, 994.962]
+    allow_transfers: true
+
+  - location_name: camera_station_approach
+    description: Approach waypoint for camera station
+    representations:
+      pf400: [166.87, 0.648, 98.948, 706.188, 70.855, 995.16]
+    allow_transfers: false
+
+  # ---- OT-2 deck slots (TEMPORARILY lab-managed; should be node-intrinsic) ----
+  - location_name: ot2_beta.deck_2
+    representations:
+      pf400: [165.521, -60.38, 273.491, 413.51, 122.139, -967.685]
+    allow_transfers: true
+
+  - location_name: ot2_gamma.deck_2
+    representations:
+      pf400: [161.545, 63.775, 82.928, 660.028, 122.093, -967.62]
+    allow_transfers: true
+
+  - location_name: ot2_gamma.safe_approach
+    description: Safe approach waypoint for OT-2 Gamma
+    representations:
+      pf400: [251.587, 43.132, 121.003, 641.075, 70.814, -991.142]
+    allow_transfers: false
+
+  # ---- PF400 rotation deck (internal to PF400 transfer rotation logic) ----
+  - location_name: pf400.rotation_deck
+    description: Rotation deck narrow grip position (used internally by PF400 transfer rotation logic)
+    representations:
+      pf400: [62.287, -27.703, 113.691, 631.713, 75.088, 994.854]
+    allow_transfers: false
+
+  - location_name: pf400.rotation_deck_approach
+    description: Approach waypoint for rotation deck
+    representations:
+      pf400: [181.008, -22.37, 136.727, 603.393, 70.873, 994.487]
+    allow_transfers: false
