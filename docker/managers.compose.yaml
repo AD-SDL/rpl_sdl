@@ -10,8 +10,8 @@ x-service-template: &service-template
   network_mode: host
   working_dir: /home/madsci/rpl_sdl
   volumes:
-    - ${LOCAL_WORKSPACE_FOLDER:-../}:/home/madsci/rpl_sdl/
-    - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci:/home/madsci/.madsci/
+    - rpl_sdl:/home/madsci/rpl_sdl/
+    - rpl_sdl:.madsci:/home/madsci/.madsci/
   restart: unless-stopped
 
 services:
@@ -101,3 +101,5 @@ services:
       - rpl_redis
       - rpl_event_manager
       - rpl_resource_manager
+volumes:
+  rpl_sdl:

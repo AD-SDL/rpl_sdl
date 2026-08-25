@@ -10,7 +10,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/mongodb:/data/db
+      - rpl_sdl_infra:/data/db
   rpl_redis:
     container_name: rpl_redis
     image: redis:7.4
@@ -21,7 +21,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/redis:/data
+      - rpl_sdl_infra:/data
     command: redis-server --appendonly yes --save 900 1 --save 300 10 --save 60 10000
   rpl_postgres:
     container_name: rpl_postgres
@@ -37,7 +37,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/postgres:/var/lib/postgresql/data
+      - rpl_sdl_infra:/var/lib/postgresql/data
   rpl_pgadmin:
     container_name: rpl_pgadmin
     image: dpage/pgadmin4
@@ -50,7 +50,7 @@ services:
     ports:
       - 5050:80
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/pgadmin:/var/lib/pgadmin
+      - rpl_sdl_infra:/var/lib/pgadmin
     depends_on:
       - rpl_postgres
   rpl_redis_commander:
@@ -71,7 +71,10 @@ services:
       - infra
       - '' # Empty string allows service to start when no --profile is specified
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-../}.madsci/uptime:/app/data
+      - rpl_sdl_infra:/app/data
     ports:
       - 9991:3001
     restart: unless-stopped
+
+volumes:
+  rpl_sdl_infra:
